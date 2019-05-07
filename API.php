@@ -57,18 +57,18 @@ if(isset($_GET['apicall'])) {
         break;
 
         case 'loginacc':
-            checkParams(array('ic', 'pass'));
+            checkParams(array('userName', 'password'));
             $db = new APIOperation();
 
             $result = $db->loginAcc(
-                $_POST['ic'],
-                $_POST['pass']
+                $_POST['userName'],
+                $_POST['password']
             );
 
             if ($result) {
                 $response['error'] = false;
                 $response['message'] = 'Log in successful';
-                $response['account'] = $db->getAcc($_POST['ic']);
+                $response['account'] = $db->getAcc($_POST['userName']);
             }
             else {
                 $response['error'] = true;
