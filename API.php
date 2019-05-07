@@ -36,14 +36,13 @@ if(isset($_GET['apicall'])) {
     switch($_GET['apicall']) {
 
         case 'registeracc':
-            checkParams(array('ic', 'fullname', 'email', 'pass'));
+            checkParams(array('userName', 'email', 'password'));
             $db = new APIOperation();
 
             $result = $db->registerAcc(
-                $_POST['ic'],
-                $_POST['fullname'],
+                $_POST['userName'],
                 $_POST['email'],
-                $_POST['pass']
+                $_POST['password']
             );
 
             if ($result) {

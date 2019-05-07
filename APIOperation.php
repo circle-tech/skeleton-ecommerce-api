@@ -11,10 +11,10 @@ class APIOperation {
         $this->con = $db->connect();
     }
 
-    function registerAcc($ic, $fullname, $email, $password) {
-        $stmt = $this->con->prepare("INSERT INTO account (ic, fullname, email, pass) VALUES (?, ?, ?, ?)");
+    function registerAcc($username, $email, $password) {
+        $stmt = $this->con->prepare("INSERT INTO account (userName, email, password) VALUES (?, ?, ?)");
         $password = md5($password);
-        $stmt->bind_param("isss", $ic, $fullname, $email, $password);
+        $stmt->bind_param("sss", $username, $email, $password);
         if($stmt->execute())
             return true;
         return false; 
