@@ -74,6 +74,24 @@ if(isset($_GET['apicall'])) {
                 $response['message'] = 'Log in failed';
             }
         break;
+
+        case 'getproducts':
+            checkParams(array('minQuantity'));
+            $db = new APIOperation();
+
+            $result = $db->getProducts(
+                $_POST['minQuantity']
+            );
+
+            if ($result) {
+                $response['error'] = false;
+                $response['message'] = 'Successfully fetched products';
+            }
+            else {
+                $response['error'] = true;
+                $response['message'] = 'Failed to fetch products';
+            }
+        break;
     }
 } else {
     $response['error'] = true; 
