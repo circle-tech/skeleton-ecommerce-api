@@ -76,20 +76,18 @@ if(isset($_GET['apicall'])) {
         break;
 
         case 'getproducts':
-            checkParams(array('minQuantity'));
             $db = new APIOperation();
 
-            $result = $db->getProducts(
-                $_POST['minQuantity']
-            );
+            $result = $db->checkProducts();
 
             if ($result) {
                 $response['error'] = false;
                 $response['message'] = 'Successfully fetched products';
+                $response['products'] = $db->getProducts();
             }
             else {
                 $response['error'] = true;
-                $response['message'] = 'Failed to fetch products';
+                $response['message'] = 'There is no product added yet';
             }
         break;
     }
