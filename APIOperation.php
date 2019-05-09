@@ -48,4 +48,26 @@ class APIOperation {
         }
         return $accounts; 
     }
+
+    function getProducts($minquantity) {
+        $stmt = $this->con->prepare("SELECT productId, productName, productDescription, productQuantity, productPrice, productImage FROM product WHERE productQuantity > ?");
+        $stmt->bind_param("i", $minquantity);
+        $stmt->execute();
+        $stmt->bind_result($productid, $productname, $productdesc, $productquantity, $productprice, $productimage);
+
+        $products = array();
+
+        while($stmt->fetch()) {
+            $product = array();
+            $product['productId'] = $productid;
+            $product['productName'] = $productname;
+            $product['productDescription'] = $productdesc;
+            $product['productQuantity'] = $productquantity;
+            $product['productPrice'] = $productprice;
+            $product['productImage'] = $productimage;
+
+            array_push($products, $product);
+        }
+        return $products;
+    }
 }
