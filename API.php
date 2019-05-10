@@ -90,6 +90,26 @@ if(isset($_GET['apicall'])) {
                 $response['message'] = 'There is no product added yet';
             }
         break;
+
+        case 'addproduct':
+            $db = new APIOperation();
+
+            $result = $db->addProduct(
+                $_POST['productName'],
+                $_POST['productDescription'],
+                $_POST['productPrice'],
+                $_POST['productQuantity']
+            );
+
+            if ($result) {
+                $response['error'] = false;
+                $response['message'] = 'Successfully added the product';
+            }
+            else {
+                $response['error'] = true;
+                $response['message'] = 'Failed to add the product';
+            }
+        break;
     }
 } else {
     $response['error'] = true; 
