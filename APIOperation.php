@@ -15,10 +15,8 @@ class APIOperation {
         $stmt = $this->con->prepare("INSERT INTO account (userName, email, password) VALUES (?, ?, ?)");
         $password = md5($password);
         $stmt->bind_param("sss", $username, $email, $password);
-        
         if($stmt->execute())
             return true;
-        
         return false; 
     }
 
@@ -28,10 +26,8 @@ class APIOperation {
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();
         $stmt->store_result();
-        
         if ($stmt->num_rows == 1)
             return true;
-        
         return false;
     }
 
@@ -50,7 +46,6 @@ class APIOperation {
 
             array_push($accounts, $acc);
         }
-
         return $accounts; 
     }
 
@@ -58,10 +53,8 @@ class APIOperation {
         $stmt = $this->con->prepare("SELECT * FROM product");
         $stmt->execute();
         $stmt->store_result();
-        
         if ($stmt->num_rows > 0)
             return true;
-        
         return false;
     }
 
@@ -83,17 +76,6 @@ class APIOperation {
 
             array_push($products, $product);
         }
-
         return $products;
-    }
-
-    function addProduct($productname, $productdesc, $productprice, $productquantity) {
-        $stmt = $this->con->prepare("INSERT INTO product (productName, productDescription, productPrice, productQuantity) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssdi", $productname, $productdesc, $productprice, $productquantity);
-
-        if ($stmt->execute())
-            return true;
-        
-        return false;
     }
 }
