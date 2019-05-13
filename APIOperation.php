@@ -111,6 +111,7 @@ class APIOperation {
 
     function getProductInfo($productid) {
         $stmt = $this->con->prepare("SELECT productName, productDescription, productQuantity, productPrice, productImage FROM product WHERE productId=?");
+        $stmt->bind_param("i", $productid);
         $stmt->execute();
         $stmt->bind_result($productname, $productdescription, $productquantity, $productprice, $productimage);
 
