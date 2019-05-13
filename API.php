@@ -92,6 +92,7 @@ if(isset($_GET['apicall'])) {
         break;
 
         case 'addproduct':
+            checkParams(array('productName', 'productDescription', 'productPrice', 'productQuantity'));
             $db = new APIOperation();
 
             $result = $db->addProduct(
@@ -108,6 +109,25 @@ if(isset($_GET['apicall'])) {
             else {
                 $response['error'] = true;
                 $response['message'] = 'Failed to add the product';
+            }
+        break;
+
+        case 'getproductinfo':
+            checkParams(array('productId'));
+            $db = new APIOperation();
+
+            $result = $db->checkProductInfo(
+                $_POST['productId']
+            );
+
+            if ($result) {
+                $response['error'] = false;
+                $response['message'] = 'Successfully fetched product info data';
+                $response['product'] = $db->getProductInfo($_POST['productId']);
+            }
+            else {
+                $response['error'] = true;
+                $response['message'] = 'Failed to fetch the product info data';
             }
         break;
     }
