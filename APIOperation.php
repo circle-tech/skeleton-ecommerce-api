@@ -96,4 +96,38 @@ class APIOperation {
         
         return false;
     }
+
+    function checkProductInfo($productid) {
+        $stmt = $this->con->prepare("SELECT * FROM product WHERE productId=?");
+        $stmt->bind_param("i", $productid);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0)
+            return true;
+
+        return false;
+    }
+
+    function getProductInfo($productid) {
+        $stmt = $this->con->prepare("SELECT productName, productDescription, productQuantity, productPrice, productImage FROM product WHERE productId=?");
+        $stmt->execute();
+        $stmt->bind_result($productname, $productdescription, $productquantity, $productprice, $productimage);
+
+        $product = array();
+
+        while ($stmt->fetch()) {
+            $productinfo = array();
+            $productinfo['productId'] = $productid;
+            $productinfo['productName'] = $productname;
+            $productinfo['productDescription'] = $productdescription;
+            $productinfo['productQuantity'] = $productquantity;
+            $productinfo['productPrice'] = $productprice;
+            $productinfo['productImage'] = $productimage;
+
+            array_push($product, $productinfo);
+        }
+
+        return $product;
+    }
 }
